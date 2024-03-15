@@ -1,26 +1,15 @@
 const express = require('express');
-const socketio = require('socket.io');
-const http = require('http');
-
-const PORT = process.env.PORT || 4000
-
-const router = require('./router');
-
-
+const path = require('path');
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
 
+// Serve static files from the 'build' directory
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
 
-io.on('connection', (socket) =>{
-console.log('we have a new conneciton')
+// Define a route to serve 'index.html' for any route other than '/'
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
- socket.on('disconnect', ()=>{
-	console.log('user had left')
- })
-})
-
-
-app.use(router)
-
-server.listen(PORT, ()=> console.log(`Server has started on port ${PORT}`));
+// Your existing server setup code...
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
