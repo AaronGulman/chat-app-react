@@ -15,15 +15,21 @@ const Chat = () => {
 	useEffect(() =>{
 		const {name , room} = queryString.parse(location.search);
 
-		socket = io(ENDPOINT)
+		socket = io(ENDPOINT);
 
 		setName(name);
 		setRoom(room);
 
+		socket.emit('join', {name , room}); //ES6 syntax
+
 		return () => {
-			socket.disconnect();
+			// socket.disconnect();
+			socket.emit('disconnect');
+
+			socket.off();
 		      };
-		    }, [location.search]);
+
+		    }, [ENDPOINT, location.search]);
 
 
 return (
