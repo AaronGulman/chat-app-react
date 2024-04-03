@@ -8,7 +8,7 @@ const Join = () => {
 	const [room, setRoom] = useState('');
 
 
-	return(
+	return (
 		<div className='joinOuterContainer'>
 		<div className='joinInnerContainer'>
 			<h1 className='heading'>Join</h1>
@@ -17,10 +17,8 @@ const Join = () => {
 			<Link onClick={event => (!name || !room) ? event.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
 			<button className='button mt-20' type='submit'>Sign in</button>
 			</Link>
-
-
-		</div>
-		</div>
+			</div>
+			</div>
 	)
 }
 

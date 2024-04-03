@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 let socket;
 
-const Chat = () => {
+const Chat = ({/*location*/}) => {
 	const location = useLocation();
 	const [name, setName] = useState('');
 	const [room, setRoom] = useState('');

@@ -23,14 +23,21 @@ io.on('connection', (socket)=>{
     socket.on("join", ({name , room}, callback)=>{
         const { error, user } = addUser({id: socket.id,name,room});
 
-        if(error) return callback(error);
+        if(error){
+            if(callback) {
+                callback(error);
+            }
+            return; 
+        }
 
         socket.emit('message', {user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
         socket.broadcast.to(user.room).emit('message', {user: "admin", text: `${user.name} has joined the chat`})
 
         socket.join(user.room);
 
-        callback();
+        if(callback){
+            callback(); //we must ensure it is defined before it is invoked since otherwise it might cause an error 
+        }
 
     });
 
